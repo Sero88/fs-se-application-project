@@ -1,5 +1,5 @@
 <?php
-class Router{
+class Request_Parser{
     private $request;
     private $base_uri;
     private $allowed_sort_params = array("name","mass","height");
@@ -9,6 +9,10 @@ class Router{
 
     }
     public function get_request(){
+
+        //determine type of request
+        
+
         $user_request = $_SERVER['REQUEST_URI'];
 
         if( isset($_REQUEST['sort']) && in_array( $_REQUEST['sort'], $this->allowed_sort_params ) ){
@@ -33,7 +37,7 @@ class Router{
          //return $matches;
         $request['pages'] = explode( "/", $user_request ) ;
         
-        print_r($request);
+        //print_r($request);
         //index 2 contains page user wants to access
         if( !empty($request['pages'][2]) ){
             return $request;

@@ -5,38 +5,54 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 class Web_App{
-    private $router;
     private $pages = array( //request => view
-        "characters" => "Characters.php", 
-        "planet-residents" => "Planets.php", 
-        "search" => "Search.php",
-        "main" => "Main.php",
+        "characters" => "Characters",
+        "character" => "Characters",
+        "planet-residents" => "Planets", 
+        "search" => "Search",
+        "main" => "Main",
     );
 
     //get necessary files for web app
     function __construct(){
-        //get router and initialize it
-        require_once 'includes/router.php';
-        $this->router = new Router();
+        //get parser
+        require_once 'includes/request-parser.php';
+        
+        //used to set args to make specific call to api
+        require_once 'includes/endpoints.php';
+
+        //api controller class
+        require_once 'controllers/api-controller.php';
     }
     
     //initialize web app
     public function init(){
         //get user request
+        $router = new Request_Parser();
         $request = $router->get_request();
        
+        //print_r($request);
+
         //if user is not requesting a specific page or the requested page does not exist, show main page
-        if( false === $request || false === $this->verify_request_exists($request[1]) ){
+        if( false === $request || false === $this->verify_request_exists( $request['pages'][2]) ){
             return $this->display_view();
         }
+
+        //prepare endpoint url
+        $endpoint_url = Endpoints::prepare_url($request);
+
+        //get data from API
+        $api_controller = new API_Controller();
+        $api_controller->get_api_data($endpoint_url);
+        
     }
     
     private function display_view($request = "main", $data = NULL){
         //get the view file
-        include_once "views/" . $this->page[$request];
+        include_once "views/" . $this->page[$request] . ".php";
         
         //instantiate and output data using view
-        $view = new $view($data);
+        $view = new $request($data);
         return $view->output();
     }
 
@@ -48,7 +64,18 @@ class Web_App{
         }
         return false;
     }
+
+    private function get_data($url, $request){
+        switch ($request['pages'][2]){
+            case 'character':
+                $result = $
+            break;
+        }
+    }
 }
+
+$web_app = new Web_App();
+$web_app->init();
 
 
 /*
