@@ -3,6 +3,7 @@ class Request_Parser{
     private $request;
     private $base_uri;
     private $allowed_sort_params = array("name","mass","height");
+    private $accepted_uri_args = array("app_name","page","indiv_item");
 
     function __construct(){
         //get base_uri
@@ -10,17 +11,18 @@ class Request_Parser{
     }
     public function get_request(){
 
-        //determine type of request
-        
+        $request_string = strtolower($_SERVER['REQUEST_URI']);
+        $request = array(); //will store request items as they are extracted from $request_string
 
-        $user_request = $_SERVER['REQUEST_URI'];
-
-        if( isset($_REQUEST['sort']) && in_array( $_REQUEST['sort'], $this->allowed_sort_params ) ){
-            //assign to $request var
-            $request['sort'] = $_REQUEST['sort'];
-
-            //remove sort param from request string
-            $user_request = str_replace('?sort='.$_REQUEST['sort'], '', $user_request);
+    
+        //check if user has any Query String Parameters (such as sort)
+        if( !empty($_SERVER['QUERY_STRING']) ){
+            //assign to sort if it exists
+            $request['sort'] =  isset($_REQUEST['sort']) && in_array( strtolower($_REQUEST['sort']), $this->allowed_sort_params ) ? strtolower($_REQUEST['sort']) : false;
+            $request['order'] = isset($_REQUEST['order']) ? strtolower( filter_var($_REQUEST['order'],FILTER_SANITIZE_STRING) ) : "asc";
+            
+            //remove query string from user request (no longer needed)
+            $request_string = str_replace("?" . $_SERVER['QUERY_STRING'],'',$request_string);
         }
         
       
@@ -35,19 +37,17 @@ class Request_Parser{
         //preg_match_all($pattern, $_SERVER['REQUEST_URI'], $matches);
 
          //return $matches;
-        $request['pages'] = explode( "/", $user_request ) ;
+        //echo $request_string;
+
+        //get items from user request
+        $request_items = explode( "/", $request_string ) ;            
+        $accepted_args_count = count($this->accepted_uri_args);
         
-        //print_r($request);
-        //index 2 contains page user wants to access
-        if( !empty($request['pages'][2]) ){
-            return $request;
+        //assign items to $request based on $accepted_uri_args
+        for($i = $accepted_args_count ; $i > 0 ; $i--){
+            $request[ $this->accepted_uri_args[$i - 1] ] = !empty($request_items[$i]) ? $request_items[$i] : null;
         }
-        else{
-            return false;
-        }
-       
-        
-        
-        //print_r($matches);
+
+        return $request;
     }
 }

@@ -15,7 +15,7 @@ class  API_Controller{
 
         curl_close($curl);
 
-        print_r(json_decode($result, true));
+        return json_decode($result, true);
         
     }
 }

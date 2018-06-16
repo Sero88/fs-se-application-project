@@ -8,15 +8,15 @@ class Endpoints{
         $data_type = '';
         $search_term = '';
        
-        switch ($request['pages'][2]){
+        switch ($request['page']){
             case 'characters':               
                 $data_type = 'people';                
             break;
 
             case 'character':
-                if( !empty($request['pages'][3]) ) {
+                if( !empty($request['indiv_item']) ) {
                     $data_type = 'people';
-                    $search_term = '&search=' . $request['pages'][3];
+                    $search_term = '&search=' . $request['indiv_item'];
                 }
             break;
 
