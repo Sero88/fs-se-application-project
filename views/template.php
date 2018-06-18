@@ -1,4 +1,7 @@
 <?php 
+/***
+* Class to display template elements (shared throughout web app)
+***/
 class Template{
     public function get_header(){
         ?>

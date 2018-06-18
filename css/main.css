@@ -149,6 +149,8 @@ input[type="text"] {
     box-shadow: 0px 1px 3px 2px #efeeee;
     border-top: 2px solid #ff7e43;
     margin: 50px auto;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
     font-size: 24px;  
     font-weight: 300;

@@ -1,7 +1,15 @@
 <?php
+/*
+* Class that gets initial endpoint based on user request
+* author: Sergio Esquivel
+*/
 class Endpoints{
-    
 
+    /*
+    * Prepares the url to get initial API data based on request
+    *
+    * @param array $request Array containing the multiple request items from user url input
+    */
     static function prepare_url($request){
         $base_url = 'https://swapi.co/api/';
         $format = '/?format=json';
@@ -26,7 +34,6 @@ class Endpoints{
             break;
 
         }
-
         
         return $base_url . $data_type . $format . $search_term . $page_num;
     

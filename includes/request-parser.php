@@ -1,14 +1,20 @@
 <?php
+
+/*
+* Class to parse the URL to get the request from the user
+* 
+* author: Sergio Esquivel
+*/
 class Request_Parser{
     private $request;
     private $base_uri;
     private $allowed_sort_params = array("name","mass","height");
     private $accepted_uri_args = array("app_name","page","indiv_item");
 
-    function __construct(){
-        //get base_uri
-
-    }
+    /**
+    * Breaks down URL to grab request
+    * @return array $request - items 
+    */
     public function get_request(){
 
         $request_string = strtolower($_SERVER['REQUEST_URI']);
@@ -27,25 +33,6 @@ class Request_Parser{
             //remove query string from user request (no longer needed)
             $request_string = str_replace("?" . strtolower($_SERVER['QUERY_STRING']),'',$request_string);
         }
-
-        
-
-        //if user is searching for chracter grab the item and assign it
-      
-        
-      
-        //remove base_uri from server request URI
-      
-        //$request = str_replace($this->base_uri,'',$_SERVER['REQUEST_URI']);
-        
-        //$matches = array();
-       
-        //$pattern = "%/([^/]*)/([^*]*)%";
-
-        //preg_match_all($pattern, $_SERVER['REQUEST_URI'], $matches);
-
-         //return $matches;
-        //echo $request_string;
 
         //get items from user request
         $request_items = explode( "/", $request_string ) ;            

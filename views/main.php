@@ -1,4 +1,9 @@
 <?php
+
+/***
+* Class to display homepage
+***/
+
 class main implements View{
     public function output($data, $paginator = false){
         ?>
