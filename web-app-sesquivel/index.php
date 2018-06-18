@@ -1,9 +1,4 @@
 <?php
-
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 /**
 * main web application class
 * author: Sergio Esquivel
@@ -350,5 +345,6 @@ class Web_App{
 
 }
 
+//instantiate and run app
 $web_app = new Web_App();
 $web_app->init();
