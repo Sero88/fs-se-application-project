@@ -33,7 +33,7 @@ class Web_App{
         require_once 'includes/paginator.php';
 
         //view interface
-        require_once 'views/view.php';
+        require_once 'views/view.php';				
 
     }
     

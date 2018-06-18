@@ -36,9 +36,9 @@ class Template{
         ?>       
                     </main>     
                     <footer> 
-                        <p>Copyright <?= date('Y',time())?> Sergio Esquivel</p>
+                        <p>Copyright &copy; Sergio Esquivel</p>
                         <p>Data Retrieved using: <a href="https://swapi.co/">SWAPI.CO</a></p>
-                        <p><em>Commercial logos and brands belong to their respective owners.  I do not claim ownership nor any affiliation.</em>
+                        <p><em>Commercial logos, images and brands belong to their respective owners.  I do not claim ownership nor any affiliation.</em>
 
                     </footer>
                 </body>
