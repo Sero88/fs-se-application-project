@@ -7,6 +7,7 @@ class Endpoints{
         $format = '/?format=json';
         $data_type = '';
         $search_term = '';
+        $page_num = !empty($request['page_number']) ? '&page=' . $request['page_number'] : '';
        
         switch ($request['page']){
             case 'characters':               
@@ -20,12 +21,14 @@ class Endpoints{
                 }
             break;
 
-            case 'planet-residents':
+            case 'planet-residents':                
                 $data_type = 'planets';
             break;
 
         }
 
-        return $base_url . $data_type . $format . $search_term;
+        
+        return $base_url . $data_type . $format . $search_term . $page_num;
+    
     }
 }

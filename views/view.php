@@ -6,5 +6,5 @@
 ***/
 
 interface View{
-    public function output(); //handles html output
+    public function output($data); //handles html output
 }

@@ -16,14 +16,22 @@ class Request_Parser{
 
     
         //check if user has any Query String Parameters (such as sort)
-        if( !empty($_SERVER['QUERY_STRING']) ){
+        if( !empty($_SERVER['QUERY_STRING']) || isset($_REQUEST['indiv_item'])  ){
+            
             //assign to sort if it exists
             $request['sort'] =  isset($_REQUEST['sort']) && in_array( strtolower($_REQUEST['sort']), $this->allowed_sort_params ) ? strtolower($_REQUEST['sort']) : false;
             $request['order'] = isset($_REQUEST['order']) ? strtolower( filter_var($_REQUEST['order'],FILTER_SANITIZE_STRING) ) : "asc";
-            
+            $request['page_number'] = isset($_REQUEST['page']) ? filter_var($_REQUEST['page'],FILTER_SANITIZE_STRING) : null;    
+            $request['indiv_item'] = isset($_REQUEST['indiv_item']) ? strtolower(urlencode(filter_var($_REQUEST['indiv_item'],FILTER_SANITIZE_STRING))) : '';
+
             //remove query string from user request (no longer needed)
-            $request_string = str_replace("?" . $_SERVER['QUERY_STRING'],'',$request_string);
+            $request_string = str_replace("?" . strtolower($_SERVER['QUERY_STRING']),'',$request_string);
         }
+
+        
+
+        //if user is searching for chracter grab the item and assign it
+      
         
       
         //remove base_uri from server request URI
@@ -45,6 +53,7 @@ class Request_Parser{
         
         //assign items to $request based on $accepted_uri_args
         for($i = $accepted_args_count ; $i > 0 ; $i--){
+            if(!empty($request[ $this->accepted_uri_args[$i - 1] ])) continue;
             $request[ $this->accepted_uri_args[$i - 1] ] = !empty($request_items[$i]) ? $request_items[$i] : null;
         }
 
